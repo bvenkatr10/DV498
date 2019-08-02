@@ -1,0 +1,179 @@
+.names {
+    fill: none;
+    stroke: rgba(0, 0, 0, 0.98);
+    stroke-linejoin: round;
+}
+
+/* Tooltip CSS */
+.d3-tip {
+    line-height: 1.5;
+    font-weight: 400;
+    font-family: "avenir next", Arial, sans-serif;
+    padding: 6px;
+    background: rgb(0, 0, 0);
+    color: rgba(255, 255, 255, 0.98);
+    border-radius: 1px;
+    pointer-events: none;
+}
+
+/* Creates a small triangle extender for the tooltip */
+.d3-tip:after {
+    box-sizing: border-box;
+    display: inline;
+    font-size: 8px;
+    width: 100%;
+    line-height: 1.5;
+    color: rgb(0, 0, 0);
+    position: absolute;
+    pointer-events: none;
+
+}
+
+/* Northward tooltips */
+.d3-tip.n:after {
+    content: "\25BC";
+    margin: -1px 0 0 0;
+    top: 100%;
+    left: 0;
+    text-align: center;
+}
+
+/* Eastward tooltips */
+.d3-tip.e:after {
+    content: "\25C0";
+    margin: -4px 0 0 0;
+    top: 50%;
+    left: -8px;
+}
+
+/* Southward tooltips */
+.d3-tip.s:after {
+    content: "\25B2";
+    margin: 0 0 1px 0;
+    top: -8px;
+    left: 0;
+    text-align: center;
+}
+
+/* Westward tooltips */
+.d3-tip.w:after {
+    content: "\25B6";
+    margin: -4px 0 0 -1px;
+    top: 50%;
+    left: 100%;
+}
+
+/*    text{
+      pointer-events:none;
+    }*/
+
+.details {
+    color: white;
+}
+
+/* Legend Font Style */
+body {
+    font: 11px sans-serif;
+    background-color: #ffffff;
+}
+
+/* Legend Position Style */
+.legend {
+    position: absolute;
+    /*left:20px;*/
+    /*top:30px;*/
+    top: 14%;
+    margin-left: 90%;
+}
+
+#background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: url('../img/co2high.jpg');
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100%;
+    opacity: 0.14;
+
+
+}
+#chartContainer {
+    display: flex;
+}
+#yearCounter {
+    float: left;
+    margin-left: 2em;
+    margin-top: 17em;
+}
+#chosenYear {
+    color: navy;
+    font-size: xx-large;
+}
+#labelSlider {
+    font-family: monospace;
+    margin-left:15em;
+    font-weight: 600;
+}
+.yearSlider {
+    font-family: monospace;
+    font-weight: bolder;
+}
+#endSliderValue {
+    margin-left: 47em;
+}
+#playAnimation {
+    margin-bottom: 1em;
+    margin-top: -14em;
+}
+.axis text {
+    font: 10px sans-serif;
+}
+
+.axis line, .axis path {
+    fill: none;
+    stroke: #000;
+    shape-rendering: crispEdges;
+}
+.slidecontainer {
+    margin-top: 46em;
+    position: fixed;
+    margin-left: 32em;
+    display: inline-table;
+    width: 45%;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 100%;
+    height: 25px;
+    background: lightgrey;
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: .2s;
+    transition: opacity .2s;
+}
+
+.slider:hover {
+    opacity: 1;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 18px;
+    height: 27px;
+    background: navy;
+    border-style: solid;
+    border-color: navy;
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 25px;
+    height: 25px;
+    background: #4CAF50;
+    cursor: pointer;
+}
