@@ -54,7 +54,11 @@
     left: 0;
     text-align: center;
 }
-
+#container0 {
+    text-align: center;
+    color:blue;
+    margin-top:25em;
+}
 /* Westward tooltips */
 .d3-tip.w:after {
     content: "\25B6";
@@ -146,7 +150,7 @@ body {
 .slidecontainer {
     margin-top: 58em;
     position: fixed;
-    margin-left: 45em;
+    margin-left: 42em;
     display: inline-table;
     width: 45%;
 }
