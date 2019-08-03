@@ -4,6 +4,7 @@ queue()
     .defer(d3.csv, "dataset/co2emissions.csv")
     .await(ready);
 function ready(error, data, historicalCO2) {
+    selectedValue = 1757;
     /** Global dataset storage **/
     allCO2Data = historicalCO2;
     allWorldJson = data;
@@ -19,6 +20,7 @@ function displayAnnotations(annotations, yearValue) {
     d3.select("svg")
         .append("g")
         .attr("class", "annotation-group" + yearValue)
+        .style('font-size', '1.1em')
         .call(makeAnnotations)
 
 }
@@ -127,10 +129,11 @@ function updateChart(allCO2Data, data, sliderValue) {
         .enter().append("path")
         .attr("d", path)
         .style("fill", function (d) {
-            //console.log("isNaN((d.CO2emissions))", (isNaN(d.CO2emissions)));
+            console.log("isNaN((d.CO2emissions))", (isNaN(d.CO2emissions)));
             if (isNaN((d.CO2emissions))) {
-                return "darkgrey";
+                return "lightblue";
             } else {
+                console.log("color returned",ramp(d.CO2emissions))
                 return ramp(d.CO2emissions);
             }
         })
@@ -217,6 +220,7 @@ function animates () {
     d3.select("#chosenYear").text(1757);
     playAnimation();
 }
+
 /* annotations labels*/
 const labels = [[{
     note: {

@@ -23,6 +23,12 @@
 <body>
 <!--<div id="background"></div>-->
 <!-- Add a slider -->
+<div id="navigate">
+    <button id="one" class = "btn btn-group-lg btn-success">1</button>
+    <button id="two" class = "btn btn-group-lg btn-success">2</button>
+    <button id="three" class = "btn btn-group-lg btn-success">3</button>
+</div>
+<div id="slide1">
 <h1 style="text-align: center;font-style: oblique"> Annual CO2 emissions by Country</h1>
 <div class="slidecontainer">
     <input type="range" min="1757" max="2017" value="50" class="slider" name="mySlider" id="mySlider">
@@ -32,7 +38,8 @@
         <span class ="glyphicon glyphicon-play">    </span>
     </button>
 </div>
-<div id="container">
+</div>
+<div id="container1">
     <div id="yearCounter">
         <h2 style="text-align: center;"><span> YEAR </span></br><span id="chosenYear">  </span></h2>
     </div>
@@ -41,9 +48,93 @@
         <div id="co2em"></div>
     </div>
 </div>
+<div id="container2">
+    <h1 style="text-align: center;font-style: oblique"> Co2 Emissions Growth Trend by Top Countries</h1>
+    <div id="messages" style="display: flex;">
+        <div id="msg1" style="margin-right: 29em;">
+            <h3>Global Emission Increase with Developing Nations</h3>
+            <p>
+                Top trend chart clearly depicts while any country is undergoing a huge development, they tend to produce more CO2
+            </p>
+        </div>
+        <div id="msg2">
+            <h3>More energy use ==> More Co2</h3>
+            <p>
+                Developing nations across Asia have started to produce more Co2 by utilizing more energy
+            </p>
+        </div>
+    </div>
+    <div id="chart2">
+        <!-- Create a div where the graph will take place -->
+        <div id="countryco2em"></div>
+    </div>
+    <button id="addCountry" type="button" class="btn btn-info btn-sm"
+            style="margin-left: 71em;position: absolute;margin-top: 6em;">
+        <span class="glyphicon glyphicon-plus-sign"></span>
+        <span> Load Animation </span>
+    </button>
 
+<!--    <div id="chart2">-->
+<!--        &lt;!&ndash; Create a div where the graph will take place &ndash;&gt;-->
+<!--        <div id="countryem"></div>-->
+<!--    </div>-->
+</div>
+<div id="container3">
+hello
+</div>
 <script>
     // pre-defined definitions
+    $('#container2').hide();
+    $('#container3').hide();
+    $('#two').click(function () {
+        $('#container2').show();
+        if (!slide2Loaded) {
+            slide2();
+        }
+        $('#container1').hide();
+        $('#slide1').hide();
+        $(".legend").hide();
+    })
+    $('#one').click(function () {
+        $('#container2').hide();
+        $('#container1').show();
+        $('#slide1').show();
+        $(".legend").show();
+    })
+    $('#three').click(function () {
+        $('#container2').hide();
+        $('#container3').show();
+        $('#container1').hide();
+        $('#slide1').hide();
+        $(".legend").hide();
+    })
+    /*d3.select("#container2").attr("visibility", "hidden");*/
+    /*d3.select("#container3").attr("visibility", "hidden");
+    d3.select("#one").on("click", toggleShow("one"));
+    d3.select("#two").on("click", toggleShow("two"));
+    d3.select("#three").on("click", toggleShow("three"));
+    function toggleShow(currentId) {
+        if (currentId == "one") {
+            d3.select("#container2").attr("visibility", "hidden");
+            d3.select("#container3").attr("visibility", "hidden");
+            d3.select("#container1").attr("visibility", "visible");
+            d3.select("#slide1").attr("visibility", "visible");
+            d3.select(".legend").attr("visibility", "visible");
+        } else if (currentId == "two") {
+            d3.select("#container2").attr("visibility", "visible");
+            d3.select("#container1").attr("visibility", "hidden");
+            d3.select("#container3").attr("visibility", "hidden");
+            d3.select("#slide1").attr("visibility", "hidden");
+            d3.select(".legend").attr("visibility", "hidden");
+        } else if (currentId == "three") {
+            d3.select("#container2").attr("visibility", "hidden");
+            d3.select("#container1").attr("visibility", "hidden");
+            d3.select("#slide1").attr("visibility", "hidden");
+            d3.select(".legend").attr("visibility", "hidden");
+            d3.select("#container3").attr("visibility", "visible");
+        }
+    }*/
+    // d3.select("#container2").attr("visibility", "hidden");
     d3.select("#chosenYear").text(1757);
     var format = d3.format(",");
     var lowColor = 'lightgreen';
@@ -83,9 +174,6 @@
         .translate([width / 2, height / 1.5]);
     var path = d3.geoPath().projection(projection);
     svg.call(tip);
-    var allCO2Data = {};
-    var allWorldJson = {};
-    var selectedValue = "1757";
     // Listen to the slider?
     d3.select("#mySlider").on("change", function (d) {
         d3.select("#chosenYear").text(this.value);
@@ -94,6 +182,473 @@
         console.log("selected valued", selectedValue);
         updateChart(allCO2Data, allWorldJson, selectedValue);
     })
+    var slide2Loaded = false;
+    /**
+     * slide 2
+     */
+
+    function slide2 () {
+        slide2Loaded = true;
+        var allPaths = [];
+        var countries = [];
+
+        var selectOptionCountries = [];
+        var margin2 = {top: 120, right: 150, bottom: 30, left: 50},
+            width2 = 1730 - margin2.left - margin2.right,
+            height2 = 600 - margin2.top - margin2.bottom;
+
+        var parse = d3.timeParse("%Y");
+
+        var x2 = d3.scaleTime()
+            .range([0, width2])
+            /*.domain([1751, 2017])*/;
+
+        var y2 = d3.scaleLinear()
+            .range([height2, 0])
+            .domain([0, 55]);
+
+        var color2 = d3.scaleOrdinal(d3.schemeCategory10);
+
+        var svg2 = d3.select("#countryco2em").append("svg")
+            .attr("width", width2 + margin2.left + margin2.right)
+            .attr("height", height2 + margin2.top + margin2.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin2.left + "," + margin2.top + ")");
+
+        function chartDraw(data) {
+            console.log("chartDraw", data);
+            color2.domain(d3.keys(data[0]).filter(function (key) {
+                return key !== "date";
+            }));
+            // if (selectOptionCountries.length <= 0) {
+            //     data.forEach(function (d) {
+            //         console.log("d", JSON.stringify(d));
+            //         d.date = parseDate(d.date);
+            //     });
+            // }
+            var companies = color2.domain().map(function (name) {
+                console.log("sel22");
+                return {
+                    name: name,
+                    values: data.map(function (d) {
+                        // console.log("+d[name]", +d[name]);
+                        return {date: d.date, price: +d[name]};
+                    })
+                };
+            });
+            countries = companies;
+
+            console.log("companies", companies);
+
+            console.log("d3.extent(data, function(d) { return d.date; })", d3.extent(data, function (d) {
+                return d.date;
+            }));
+
+            var yValues, tmpValues = [];
+
+            companies.forEach(function (d) {
+                d.values.map(function (x) {
+                    tmpValues.push(x.price);
+                })
+            });
+            console.log("tmpValues", tmpValues);
+            //array of all y-values
+            tmpValues = d3.set(tmpValues).values();
+            //use a d3.set to eliminate duplicate values
+            tmpMinValue = Math.min.apply(null, tmpValues);
+            tmpMaxValue = Math.max.apply(null, tmpValues);
+            yMin = Math[tmpMinValue < 0 ? 'ceil' : 'floor'](tmpMinValue / 5) * 5;
+            yMax = Math[tmpMaxValue < 0 ? 'ceil' : 'floor'](tmpMaxValue / 5) * 5;
+            console.log("yMax", yMax, yMin);
+            x2.domain(d3.extent(data, function (d) {
+                console.log("alabel", d.date)
+                return d.date;
+            }));
+
+            console.log("a", d3.max(companies, function (c) {
+                return d3.max(c.values, function (v) {
+                    return v.price;
+                });
+            }));
+            console.log("b", d3.min(companies, function (c) {
+                return d3.min(c.values, function (v) {
+                    return v.price;
+                });
+            }));
+
+            y2.domain([
+                d3.min(companies, function (c) {
+                    return d3.min(c.values, function (v) {
+                        return v.price;
+                    });
+                }),
+                d3.max(companies, function (c) {
+                    return d3.max(c.values, function (v) {
+                        return v.price;
+                    });
+                })
+            ]);
+            /*x2.domain([1751, 2017]);*/
+            var formatxAxis = d3.format('.0f');
+            var xAxis2 = d3.axisBottom(x2).tickFormat(formatxAxis)
+                .ticks(15);
+            // .scale(x)
+            // .ticks(5)tickValues([1760, 1780, 1800, 1820, 1840, 1860, 1880, 1900, 1920, 1940, 1960, 1980, 2000])
+            // .innerTickSize(15)
+            // .outerTickSize(0)
+            // .orient("bottom");
+            /*console.log("xAxis2", JSON.stringify(xAxis2), xAxis2.tickFormat( function (d) {
+                console.log("ticks", d)
+            }))*/
+            console.log("x2", JSON.stringify(x2), x2)
+            var yAxis2 = d3.axisLeft(y2)
+            // .scale(y)
+                .tickFormat(function (d) {
+                    console.log("ticksy", d)
+                    return d + "%";
+                });
+            // .innerTickSize(15)
+            // .outerTickSize(0)
+            // .tickValues(yValues)
+            // .orient("left");
+
+            var line = d3.line()
+                .curve(d3.curveMonotoneX)
+                .x(function (d) {
+                    return x2(d.date);
+                })
+                .y(function (d) {
+                    return y2(d.price);
+                });
+
+            svg2.append("g")
+                .attr("class", "x axis")
+                .attr("transform", "translate(0," + height2 + ")")
+                .call(xAxis2);
+
+            svg2.append("g")
+                .attr("class", "y axis")
+                .call(yAxis2);
+
+            svg2.append("line")
+                .attr(
+                    {
+                        "class": "horizontalGrid",
+                        "x1": 0,
+                        "x2": width2,
+                        "y1": y2(0),
+                        "y2": y2(0),
+                        "fill": "none",
+                        "shape-rendering": "crispEdges",
+                        "stroke": "black",
+                        "stroke-width": "1px",
+                        "stroke-dasharray": ("3, 3")
+                    });
+
+
+            var company = svg2.selectAll(".company")
+                .data(countries)
+                .enter().append("g")
+                .attr("class", "company");
+
+            var path = company.append("path")
+                .attr("class", "line")
+                .attr("d", function (d) {
+                    console.log("pat", JSON.stringify(d));
+                    return line(d.values);
+                })
+                .style("stroke", function (d) {
+                    return color2(d.name);
+                });
+            allPaths = path._groups;
+            console.log("allPaths", allPaths)
+            d3.select('.legend').remove();
+
+            var legend = svg2.selectAll(".company")
+                .append('g')
+                .attr('class', 'legend');
+
+            loadAnimation(path._groups);
+
+            legend.append('rect')
+                .attr('x', width2 - 20)
+                .attr('cursor', 'pointer')
+                .attr('y', function (d, i) {
+                    return i * 20;
+                })
+                .attr('width', 10)
+                .attr('height', 10)
+                .style('fill', function (d) {
+                    return color2(d.name);
+                });
+
+            legend.append('text')
+                .attr("class", "legendTexts")
+                .attr('x', width2 - 8)
+                .attr('cursor', 'pointer')
+                .attr('y', function (d, i) {
+                    return (i * 20) + 9;
+                })
+                .on("click", function (d) {
+                    clickedPathName = "#" + d.name.replace(" ", "");
+                    console.log("onclick", clickedPathName)
+                    currentLineState = d3.select(clickedPathName).attr("visibility");
+                    if (currentLineState == null || currentLineState == "visible") {
+                        d3.select(clickedPathName).attr("visibility", "hidden");
+
+                    } else if (currentLineState == 'hidden') {
+                        d3.select(clickedPathName).attr("visibility", "visible");
+                    }
+                    lineThruLegendText(legend);
+                })
+                .text(function (d) {
+                    return d.name;
+                });
+            loadAnnotations2();
+        }
+
+        function loadAnimation(path) {
+            console.log("pathlen", JSON.stringify(path))
+            console.log("pathlen", path[0].length, path[0][1])
+            for (var i = 0; i < path[0].length; i++) {
+                var totalLength = path[0][i].getTotalLength();
+                console.log("path", JSON.stringify(path[0][i].__data__.name))
+                d3.select(path[0][i])
+                    .attr("stroke-dasharray", totalLength + " " + totalLength)
+                    .attr("stroke-dashoffset", totalLength)
+                    .transition()
+                    .duration(5000)
+                    .attr("id", path[0][i].__data__.name.replace(" ", ""))
+                    // .ease("linear")
+                    .attr("stroke-dashoffset", 0);
+            }
+        }
+
+        function lineThruLegendText(legend) {
+            console.log("onclick22", clickedPathName)
+            legend.selectAll(".legendTexts")
+                .attr("text-decoration", function (d) {
+                    console.log("onclick2", d)
+                    console.log(JSON.stringify(d.name));
+                    clickedPathName = "#" + d.name.replace(" ", "");
+                    console.log("onclick222", clickedPathName)
+                    currentLineState = d3.select(clickedPathName).attr("visibility");
+                    if (currentLineState == null || currentLineState == "visible") {
+                        return "none";
+
+                    } else if (currentLineState == 'hidden') {
+                        return "line-through";
+                    }
+                })
+        }
+
+        var dataset = [];
+        var mouseG = svg2.append("g")
+            .attr("class", "mouse-over-effects");
+
+        mouseG.append("path") // this is the black vertical line to follow mouse
+            .attr("class", "mouse-line")
+            .style("stroke", "black")
+            .style("stroke-width", "1px")
+            .style("opacity", "0");
+
+        var lines = document.getElementsByClassName('line');
+
+        d3.tsv("top_country.tsv", function (error, data) {
+            dataset = data;
+            chartDraw(data);
+            loadToolTips(data);
+        });
+        $('#saveCountrySelect').click(function () {
+            selectOptionCountries = [];
+            console.log("hhe");
+            $('select[name="inptProduct"] option:selected').each(function () {
+                console.log("inptProduct");
+                var $this = $(this);
+                if ($this.length) {
+                    var selText = $this.text();
+                    selectOptionCountries.push(selText);
+                    console.log(selectOptionCountries);
+                }
+            });
+
+            var companies = color2.domain().filter(function (filter) {
+                console.log("domain", JSON.stringify(filter));
+                if (selectOptionCountries.includes(filter)) {
+                    return true; // true
+                }
+                return false; //skip
+            }).map(function (name) {
+                console.log("sel");
+                return {
+                    name: name,
+                    values: dataset.map(function (d) {
+                        // console.log("+d[name]", +d[name]);
+                        return {date: d.date, price: +d[name]};
+                    })
+                };
+            });
+            console.log("companies", companies)
+            countries = companies;
+            console.log("countries", countries)
+            chartDraw(countries);
+            setCountries();
+        });
+        $('#addCountry').click(function () {
+            loadAnimation(allPaths);
+        })
+        function loadAnnotations2() {
+            console.log("loadAnnotations2")
+            const annotations2 = [{note: {
+                    label: "Top trend chart clearly depicts while any country is undergoing a huge development, they tend to produce more CO2",
+                    bgPadding: 20,
+                    title: "Global Emission Increase with Developing Nations"
+                },
+                // type: d3.annotationCalloutCircle,
+                subject: {
+                    radius: 75,         // circle radius
+                    radiusPadding: 20   // white space around circle befor connector
+                },
+                color: ["navy"],
+                //can use x, y directly instead of dataset
+                data: {Entity: "United Kingdom", CO2emissions: 91.0641},
+                x: 600,
+                y: 160,
+                className: "show-bg",
+                dy: 37,
+                dx: 662},
+                {note: {
+                        label: "Developing nations across Asia have started to produce more Co2 by utilizing more energy",
+                        bgPadding: 20,
+                        title: "More energy use ==> More Co2"
+                    },
+                    // type: d3.annotationCalloutCircle,
+                    subject: {
+                        radius: 25,         // circle radius
+                        radiusPadding: 20   // white space around circle befor connector
+                    },
+                    color: ["navy"],
+                    //can use x, y directly instead of dataset
+                    data: {Entity: "United Kingdom", CO2emissions: 91.0641},
+                    x: 1400,
+                    y: 430,
+                    className: "show-bg",
+                    dy: -37,
+                    dx: -892}]
+            const type2 = d3.annotationCallout;
+            console.log("type2", type2)
+            const makeAnnotations2 = d3.annotation()
+                .notePadding(15)
+                .type(type2)
+                .annotations(annotations2)
+            console.log("mmakeAnnotations2", makeAnnotations2)
+            d3.select("#countryco2em").select("svg")
+                .append("g")
+                .attr("class", "annotation-group")
+                .attr("font-size", "1em")
+                .call(makeAnnotations2)
+        }
+        function loadToolTips(data) {
+            var mousePerLine = mouseG.selectAll('.mouse-per-line')
+                .data(countries)
+                .enter()
+                .append("g")
+                .attr("class", "mouse-per-line");
+
+
+            mousePerLine.append("circle")
+                .attr("r", 7)
+                .style("stroke", function (d) {
+                    return color2(d.name);
+                })
+                .style("fill", "none")
+                .style("stroke-width", "1px")
+                .style("opacity", "0");
+
+            mousePerLine.append("text")
+                .attr("transform", "translate(10,3)");
+
+
+            mouseG.append('svg:rect') // append a rect to catch mouse movements on canvas
+                .attr('width', width) // can't catch mouse events on a g element
+                .attr('height', height)
+                .attr('fill', 'none')
+                .attr('pointer-events', 'all')
+                .on('mouseout', function () { // on mouse out hide line, circles and text
+                    d3.select(".mouse-line")
+                        .style("opacity", "0");
+                    d3.selectAll(".mouse-per-line circle")
+                        .style("opacity", "0");
+                    d3.selectAll(".mouse-per-line text")
+                        .style("opacity", "0");
+                })
+                .on('mouseover', function () { // on mouse in show line, circles and text
+                    d3.select(".mouse-line")
+                        .style("opacity", "1");
+                    d3.selectAll(".mouse-per-line circle")
+                        .style("opacity", "1");
+                    d3.selectAll(".mouse-per-line text")
+                        .style("opacity", "1");
+                })
+                .on('mousemove', function () { // mouse moving over canvas
+                    var mouse = d3.mouse(this);
+                    d3.select(".mouse-line")
+                        .attr("d", function () {
+                            var d = "M" + mouse[0] + "," + height;
+                            d += " " + mouse[0] + "," + 0;
+                            return d;
+                        });
+                    d3.selectAll(".mouse-per-line")
+                        .attr("transform", function (d, i) {
+                            /*console.log(width / mouse[0])*/
+                            var xDate = x2.invert(mouse[0]),
+                                bisect = d3.bisector(function (d) {
+                                    return d.date;
+                                }).right;
+                            // console.log("dataset", dataset)
+                            // console.log("xDate", typeof xDate, xDate.toString().split(" ")[3]);
+                            xDate = xDate.toString().split(" ")[3];
+                            emission = dataset.map(function (name) {
+                                return {
+                                    name: name,
+                                    values: data.map(function (d) {
+                                        thisDate = d.date.toString().split(" ")[3];
+                                        // console.log("xDate HEREEE", xDate, thisDate)
+                                        if (thisDate == xDate) {
+                                            //console.log("xDate HEREEE match", xDate, d.date)
+                                            return {date: d.date, price: +d[name]};
+                                        }
+                                    })
+                                };
+                            });
+                            //console.log("emission here", emission);
+
+                            // idx = bisect(d.price, xDate);
+                            // console.log("idx", idx);
+                            var beginning = 0,
+                                end = lines[i].getTotalLength(),
+                                target = null;
+
+                            while (true) {
+                                target = Math.floor((beginning + end) / 2);
+                                pos = lines[i].getPointAtLength(target);
+                                if ((target === end || target === beginning) && pos.x !== mouse[0]) {
+                                    break;
+                                }
+                                if (pos.x > mouse[0]) end = target;
+                                else if (pos.x < mouse[0]) beginning = target;
+                                else break; //position found
+                            }
+
+                            d3.select(this).select('text')
+                                .text(y2.invert(pos.y).toFixed(2));
+
+                            return "translate(" + mouse[0] + "," + pos.y + ")";
+                        });
+
+                });
+        }
+    }
 </script>
 </body>
 </html>

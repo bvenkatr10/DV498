@@ -129,7 +129,7 @@ function updateChart(allCO2Data, data, sliderValue) {
         .style("fill", function (d) {
             console.log("isNaN((d.CO2emissions))", (isNaN(d.CO2emissions)));
             if (isNaN((d.CO2emissions))) {
-                return "lightgrey";
+                return "lightblue";
             } else {
                 return ramp(d.CO2emissions);
             }
