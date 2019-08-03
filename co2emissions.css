@@ -146,7 +146,7 @@ body {
 .slidecontainer {
     margin-top: 58em;
     position: fixed;
-    margin-left: 40em;
+    margin-left: 45em;
     display: inline-table;
     width: 45%;
 }
@@ -221,4 +221,22 @@ path.area {
 .guideline {
     margin-right: 100px;
     float: right;
+}
+
+/**
+    slide 3
+ */
+.bubbles {
+    stroke-width: 2px;
+    stroke: white;
+}
+
+.bubbles:hover {
+    stroke: black;
+}
+#chart3 {
+    display: flex;
+}
+#msg {
+    color:navy;
 }
