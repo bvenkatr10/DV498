@@ -28,7 +28,7 @@ function annotationFilter(yearValue) {
     }
     if (yearValue < 1800) {
         annotations = labels [counter - 1];
-        console.log("annotations", counter, JSON.stringify(labels[0]))
+        //console.log("annotations", counter, JSON.stringify(labels[0]))
         displayAnnotations(annotations, counter);
     } else if (yearValue > 1800 && yearValue < 1850) {
         d3.selectAll(".annotation-group1").style("visibility", "hidden");
@@ -75,10 +75,10 @@ function annotationFilter(yearValue) {
 
 }
 function removeAnnotations() {
-    console.log("removing annotations");
+    //console.log("removing annotations");
     for (var i = 0; i < 9; i++) {
-        console.log("removing annotations for --------------", i);
-        console.log(".annotation-group" + i)
+        //console.log("removing annotations for --------------", i);
+        //console.log(".annotation-group" + i)
         d3.selectAll(".annotation-group" + i).style("visibility", "hidden");
     }
 }
@@ -110,12 +110,12 @@ function updateChart(allCO2Data, data, sliderValue) {
             }
         }
     });
-    console.log("emissionByCountry", JSON.stringify(emissionByCountry));
+    //console.log("emissionByCountry", JSON.stringify(emissionByCountry));
     data.features.forEach(function (d) {
         d.CO2emissions = emissionByCountry[d.id];
     });
-    // console.log("d.CO2emissions2" , JSON.stringify(d));
-    console.log("emissionByCountry", JSON.stringify(emissionByCountry));
+    // //console.log("d.CO2emissions2" , JSON.stringify(d));
+    //console.log("emissionByCountry", JSON.stringify(emissionByCountry));
 
     maxPop = 28;
     minPop = 0;
@@ -127,9 +127,9 @@ function updateChart(allCO2Data, data, sliderValue) {
         .enter().append("path")
         .attr("d", path)
         .style("fill", function (d) {
-            console.log("isNaN((d.CO2emissions))", (isNaN(d.CO2emissions)));
+            //console.log("isNaN((d.CO2emissions))", (isNaN(d.CO2emissions)));
             if (isNaN((d.CO2emissions))) {
-                return "lightgrey";
+                return "darkgrey";
             } else {
                 return ramp(d.CO2emissions);
             }

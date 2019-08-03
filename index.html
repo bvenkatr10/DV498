@@ -5,6 +5,13 @@
     <title>Historical CO2 Emissions By Country</title>
     <meta charset="UTF-8">
     <title>MCS DS - CS 498 Data Visualization Week 7 Assigment</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/css/bootstrap-select.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.8.1/js/bootstrap-select.js"></script>
     <link rel="stylesheet" href="co2emissions.css"></link>
     <script src="d3.v4.min.js"></script>
     <script src="queue.v1.min.js"></script>
@@ -12,9 +19,6 @@
     <script src="d3-annotation.js"></script>
     <script src="d3-tip.js"></script>
     <script src="co2emissions.js"></script>
-    <link rel="stylesheet" href="bootstrap.min.css">
-    <script src="jquery.min.js"></script>
-    <script src="bootstrap.min.js"></script>
 </head>
 <body>
 <!--<div id="background"></div>-->
@@ -25,7 +29,7 @@
     <label id="labelSlider">Move the slider for a specific year data</label></br>
     <span class="yearSlider">1757</span><span id="endSliderValue" class="yearSlider"> 2017 </span>
     <button id="playAnimation" type="button" onClick="animates()" class ="btn btn-info">
-        <span class ="glyphicon glyphicon-play">  Play Again </span>
+        <span class ="glyphicon glyphicon-play">    </span>
     </button>
 </div>
 <div id="container">

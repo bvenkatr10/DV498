@@ -74,7 +74,9 @@
 /* Legend Font Style */
 body {
     font: 11px sans-serif;
-    background-color: #ffffff;
+    background: #ADA996;  /* fallback for old browsers */
+    background: -webkit-linear-gradient(to bottom, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996);  /* Chrome 10-25, Safari 5.1-6 */
+    background: linear-gradient(to bottom, #EAEAEA, #DBDBDB, #F2F2F2, #ADA996); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 }
 
 /* Legend Position Style */
@@ -122,7 +124,7 @@ body {
     font-weight: bolder;
 }
 #endSliderValue {
-    margin-left: 47em;
+    margin-left: 61em;
 }
 #playAnimation {
     margin-bottom: 1em;
@@ -138,9 +140,9 @@ body {
     shape-rendering: crispEdges;
 }
 .slidecontainer {
-    margin-top: 46em;
+    margin-top: 58em;
     position: fixed;
-    margin-left: 32em;
+    margin-left: 40em;
     display: inline-table;
     width: 45%;
 }
